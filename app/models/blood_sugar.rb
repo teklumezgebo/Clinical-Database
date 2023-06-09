@@ -1,3 +1,3 @@
-class BloodPressure < ActiveRecord::Base
+class BloodSugar < ActiveRecord::Base
   belongs_to :patient
 end
