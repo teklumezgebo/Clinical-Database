@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_09_024133) do
+ActiveRecord::Schema.define(version: 2023_06_09_030807) do
 
   create_table "blood_pressures", force: :cascade do |t|
     t.integer "systolic"
@@ -23,6 +23,22 @@ ActiveRecord::Schema.define(version: 2023_06_09_024133) do
   create_table "blood_sugars", force: :cascade do |t|
     t.integer "blood_sugar"
     t.integer "patient_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "clinicians", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.string "clinic_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "clinics", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.integer "clinicians"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

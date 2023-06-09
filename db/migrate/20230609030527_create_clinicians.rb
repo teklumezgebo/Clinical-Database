@@ -5,5 +5,6 @@ class CreateClinicians < ActiveRecord::Migration[6.1]
       t.string :title
       t.string :clinic_id
       t.timestamps
+    end
   end
 end
