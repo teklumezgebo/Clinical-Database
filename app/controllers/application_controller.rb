@@ -28,6 +28,14 @@ class ApplicationController < Sinatra::Base
   end
 
   patch '/patients/:id' do |t|
-    
+    patient = Patient.find(params[:id])
+    patient.update(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      hypertension: params[:hypertension],
+      diabetes: params[:diabetes]
+    )
+    patient.to_json
   end
+  
 end
