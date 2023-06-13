@@ -11,8 +11,14 @@ class ApplicationController < Sinatra::Base
     patient.to_json
   end
 
-  get "/bloodpressure/:id"
+  get "/patientbp" do 
+    patient = Patient.find_by(params(:first_name), params(:last_name))
+    patient.blood_pressures
+  end
 
+  get "/patientbs" do 
+    patient = Patient.find_by(params(:first_name), params(:last_name))
+    patient.blood_sugars
   end
 
   post '/patients' do 
@@ -25,7 +31,7 @@ class ApplicationController < Sinatra::Base
     patient.to_json
   end
 
-  post '/bloodpressure' do 
+  post '/patientstats' do 
     patient = Patient.find_by(params(:first_name), params(:last_name))
     patient_id = patient.id
 
@@ -36,20 +42,12 @@ class ApplicationController < Sinatra::Base
       patient_id: patient_id
     )
 
-    blood_pressure.to_json
-
-  end
-
-  post '/diabetes' do 
-    patient = Patient.find_by(params(:first_name), params(:last_name))
-    patient_id = patient.id
-
-
     blood_sugar = BloodSugar.create(
       blood_sugar: params(:blood_sugar),
       patient_id: patient_id
     )
 
+    blood_pressure.to_json
     blood_sugar.to_json
 
   end
