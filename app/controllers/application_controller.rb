@@ -90,9 +90,12 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/clinicians' do 
+    clinic = clinic.find_by(params[:clinic])
+    
     clinician = Clinician.create(
       name: params[:name],
-      title: params[:title]
+      title: params[:title],
+      clinic_id:  clinic.id
     )
     clinician.to_json
   end
