@@ -12,12 +12,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/patientbp" do 
-    patient = Patient.find_by(first_name: params(:first_name), last_name: params(:last_name))
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
     patient.blood_pressures
   end
 
   get "/patientbs" do 
-    patient = Patient.find_by(first_name: params(:first_name), last_name: params(:last_name))
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
     patient.blood_sugars
   end
 
@@ -51,18 +51,18 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/patientstats' do 
-    patient = Patient.find_by(first_name: params(:first_name), last_name: params(:last_name))
-    patient_id = patient.id
+    patient = Patient.where(first_name: params[:first_name], last_name: params[:last_name])
+    patient_id = patient.patient_ids
 
 
     blood_pressure = BloodPressure.create(
-      systolic: params(:systolic),
-      diastolic: params(:diastolic),
+      systolic: params[:systolic],
+      diastolic: params[:diastolic],
       patient_id: patient_id
     )
 
     blood_sugar = BloodSugar.create(
-      blood_sugar: params(:blood_sugar),
+      blood_sugar: params[:blood_sugar],
       patient_id: patient_id
     )
 
@@ -99,7 +99,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/clinics' do 
-    clinics = Clinic.all,
+    clinics = Clinic.all
     clinics.to_json
   end
 
