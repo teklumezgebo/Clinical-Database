@@ -54,33 +54,31 @@ class ApplicationController < Sinatra::Base
   post '/patientstats' do 
     patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name]).object_id
   
-
-
-    blood_pressure = BloodPressure.create(
-      systolic: params[:systolic],
-      diastolic: params[:diastolic],
-      patient_id: patient
-    )
-
-    blood_sugar = BloodSugar.create(
-      blood_sugar: params[:blood_sugar],
-      patient_id: patient
-    )
-
-    blood_pressure.to_json
-    blood_sugar.to_json
-
+    if (params[:systolic] == true && params[:diastolic] == true) do
+      blood_pressure = BloodPressure.create(
+        systolic: params[:systolic],
+        diastolic: params[:diastolic],
+        patient_id: patient
+      )
+      blood_pressure.to_json
+    elsif (params[:blood_sugar] == true)
+      blood_sugar = BloodSugar.create(
+        blood_sugar: params[:blood_sugar],
+        patient_id: patient
+      )
+      blood_sugar.to_json
+    end
+    
   end
 
   patch '/patients' do 
-    patient = Patient.find(params[:id])
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
     patient.update(
       first_name: params[:first_name],
       last_name: params[:last_name],
       hypertension: params[:hypertension],
       diabetes: params[:diabetes]
     )
-    patient.to_json
   end
 
   delete '/patients/:id' do 
