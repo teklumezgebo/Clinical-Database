@@ -8,7 +8,7 @@ class ApplicationController < Sinatra::Base
     patients.to_json
   end
   
-  get "/patients/:id" do
+  get "/patients/:first_name/:last_name" do
     patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
     patient.to_json
   end
@@ -80,7 +80,7 @@ class ApplicationController < Sinatra::Base
     end
 
     if params[:blood_sugar].present?
-      blood_sugar = BloodSugar.crate(
+      blood_sugar = BloodSugar.create(
         blood_sugar: params[:blood_sugar],
         patient_id: patient
       )
