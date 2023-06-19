@@ -66,12 +66,9 @@ class ApplicationController < Sinatra::Base
 
   post '/clinics' do
      
-    clinicians = Clinician.find_by(clinic_id: )
-
     clinic = Clinic.create(
       name: params[:name],
-      location: params[:location],
-      clinicians: 
+      location: params[:location]
     )
     clinic.to_json
   end
@@ -104,6 +101,7 @@ class ApplicationController < Sinatra::Base
       hypertension: params[:hypertension],
       diabetes: params[:diabetes]
     )
+    patient.to_json
   end
 
   delete '/patients/:id' do 
