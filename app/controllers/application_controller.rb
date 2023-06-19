@@ -23,6 +23,26 @@ class ApplicationController < Sinatra::Base
     patient.blood_sugars
   end
 
+  get '/clinicians' do  
+    clinicians = Clinician.all
+    clinicians.to_json
+  end
+
+  get '/clinicians/:id' do 
+    clinician = Clinician.find(params[:id])
+    clinician.to_json
+  end
+
+  get '/clinics' do 
+    clinics = Clinic.all
+    clinics.to_json
+  end
+
+  get '/clinics/:id' do 
+    clinic = Clinic.find(params[:id])
+    clinic.to_json
+  end
+
   post '/patients' do 
     patient = Patient.create(
       first_name: params[:first_name],
@@ -44,10 +64,14 @@ class ApplicationController < Sinatra::Base
     clinician.to_json
   end
 
-  post '/clinics' do 
+  post '/clinics' do
+     
+    clinicians = Clinician.find_by(clinic_id: )
+
     clinic = Clinic.create(
       name: params[:name],
-      location: params[:location]
+      location: params[:location],
+      clinicians: 
     )
     clinic.to_json
   end
@@ -86,26 +110,6 @@ class ApplicationController < Sinatra::Base
     patient = Patient.find(params[:id])
     patient.destroy
     patient.to_json
-  end
-
-  get '/clinicians' do  
-    clinicians = Clinician.all
-    clinicians.to_json
-  end
-
-  get '/clinicians/:id' do 
-    clinician = Clinician.find(params[:id])
-    clinician.to_json
-  end
-
-  get '/clinics' do 
-    clinics = Clinic.all
-    clinics.to_json
-  end
-
-  get '/clinics/:id' do 
-    clinic = Clinic.find(params[:id])
-    clinic.to_json
   end
 
 end
