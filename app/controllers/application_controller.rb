@@ -28,11 +28,6 @@ class ApplicationController < Sinatra::Base
     clinicians.to_json
   end
 
-  get '/clinicians/:id' do 
-    clinician = Clinician.find(params[:id])
-    clinician.to_json
-  end
-
   get '/clinics' do 
     clinics = Clinic.all
     clinics.to_json
