@@ -9,18 +9,18 @@ class ApplicationController < Sinatra::Base
   end
   
   get "/patients/:id" do
-    patient = Patient.find(params[:id])
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
     patient.to_json
   end
 
   get "/patientbp" do 
     patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
-    patient.blood_pressures
+    patient.blood_pressures.to_json
   end
 
   get "/patientbs" do 
     patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
-    patient.blood_sugars
+    patient.blood_sugars.to_json
   end
 
   get '/clinicians' do  
@@ -68,25 +68,25 @@ class ApplicationController < Sinatra::Base
     clinic.to_json
   end
 
-  # post '/patientstats' do 
-  #   patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name]).object_id
-  
-  #   if (params[:systolic] != nil && params[:diastolic] != nil) do
-  #     blood_pressure = BloodPressure.create(
-  #       systolic: params[:systolic],
-  #       diastolic: params[:diastolic],
-  #       patient_id: patient
-  #     )
-  #     blood_pressure.to_json
-  #   elsif (params[:blood_sugar] != nil)
-  #     blood_sugar = BloodSugar.create(
-  #       blood_sugar: params[:blood_sugar],
-  #       patient_id: patient
-  #     )
-  #     blood_sugar.to_json
-  #   end
+  post '/patientstats' do 
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name]).object_id
 
-  # end
+    if params[:systolic].present? && params[:diastolic].present?
+      blood_pressure = BloodPressure.create(
+        systolic: params[:systolic],
+        diastolic: params[:diastolic],
+        patient_id: patient
+      )
+    end
+
+    if params[:blood_sugar].present?
+      blood_sugar = BloodSugar.crate(
+        blood_sugar: params[:blood_sugar],
+        patient_id: patient
+      )
+    end
+
+  end
 
   patch '/patients' do 
     patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
