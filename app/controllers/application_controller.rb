@@ -13,13 +13,13 @@ class ApplicationController < Sinatra::Base
     patient.to_json
   end
 
-  get "/patientbp" do 
-    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
+  get "/patientbp/:id" do 
+    patient = Patient.find(params[:id])
     patient.blood_pressures.to_json
   end
 
   get "/patientbs" do 
-    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
+    patient = Patient.find(params[:id])
     patient.blood_sugars.to_json
   end
 
@@ -69,20 +69,20 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/patientstats' do 
-    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name]).object_id
-
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
+    patient_id = patient.id
     if params[:systolic].present? && params[:diastolic].present?
       blood_pressure = BloodPressure.create(
         systolic: params[:systolic],
         diastolic: params[:diastolic],
-        patient_id: patient
+        patient_id: patient_id
       )
     end
 
     if params[:blood_sugar].present?
       blood_sugar = BloodSugar.create(
         blood_sugar: params[:blood_sugar],
-        patient_id: patient
+        patient_id: patient_id
       )
     end
 
