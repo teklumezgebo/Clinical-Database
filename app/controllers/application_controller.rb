@@ -13,13 +13,13 @@ class ApplicationController < Sinatra::Base
     patient.to_json
   end
 
-  get "/patientbp/:id" do 
-    patient = Patient.find(params[:id])
+  get "/patientbp/:first_name/:last_name" do 
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
     patient.blood_pressures.to_json
   end
 
-  get "/patientbs" do 
-    patient = Patient.find(params[:id])
+  get "/patientbs/:first_name/:last_name" do 
+    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
     patient.blood_sugars.to_json
   end
 
