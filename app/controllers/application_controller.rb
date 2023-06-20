@@ -65,7 +65,7 @@ class ApplicationController < Sinatra::Base
       name: params[:name],
       location: params[:location]
     )
-    clinic.to_jso
+    clinic.to_json
   end
 
   post '/patientstats' do 
