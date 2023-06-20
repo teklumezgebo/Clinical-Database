@@ -19,4 +19,4 @@ Similar to clinicians clinics are able to be added to this database and show how
 
 ## Technologies Used
 
-Active record and Sinatra are used to persist data into this database along with assigning correct blood pressures/blood sugars to patients and the amount of clinicians in each clinic. Two one-to-many relationships are established one being patients and blood pressures/blood sugars with full CRUD capibilites and clinics and clinicians. Multiple fetch requests were created in order to serve the frontend with the correct need.
+Active record and Sinatra are used to persist data into this database along with assigning correct blood pressures/blood sugars to patients and the amount of clinicians in each clinic. Two one-to-many relationships are established one being patients and blood pressures/blood sugars with full CRUD capibilites and the other being clinics and clinicians. Multiple fetch requests were created in order to serve the frontend with the correct need.
