@@ -7,36 +7,6 @@ class ApplicationController < Sinatra::Base
     patients = Patient.all
     patients.to_json
   end
-  
-  get "/patients/:first_name/:last_name" do
-    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
-    patient.to_json
-  end
-
-  get "/patientbp/:first_name/:last_name" do 
-    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
-    patient.blood_pressures.to_json
-  end
-
-  get "/patientbs/:first_name/:last_name" do 
-    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
-    patient.blood_sugars.to_json
-  end
-
-  get '/clinicians' do  
-    clinicians = Clinician.all
-    clinicians.to_json
-  end
-
-  get '/clinics' do 
-    clinics = Clinic.all
-    clinics.to_json
-  end
-
-  get '/clinics/:id' do 
-    clinic = Clinic.find(params[:id])
-    clinic.to_json
-  end
 
   post '/patients' do 
     patient = Patient.create(
@@ -46,46 +16,6 @@ class ApplicationController < Sinatra::Base
       diabetes: params[:diabetes]
     )
     patient.to_json
-  end
-
-  post '/clinicians' do 
-    clinic = Clinic.find_by(name: params[:clinic]).object_id
-    
-    clinician = Clinician.create(
-      name: params[:name],
-      title: params[:title],
-      clinic_id: clinic
-    )
-    clinician.to_json
-  end
-
-  post '/clinics' do
-     
-    clinic = Clinic.create(
-      name: params[:name],
-      location: params[:location]
-    )
-    clinic.to_json
-  end
-
-  post '/patientstats' do 
-    patient = Patient.find_by(first_name: params[:first_name], last_name: params[:last_name])
-    patient_id = patient.id
-    if params[:systolic].present? && params[:diastolic].present?
-      blood_pressure = BloodPressure.create(
-        systolic: params[:systolic],
-        diastolic: params[:diastolic],
-        patient_id: patient_id
-      )
-    end
-
-    if params[:blood_sugar].present?
-      blood_sugar = BloodSugar.create(
-        blood_sugar: params[:blood_sugar],
-        patient_id: patient_id
-      )
-    end
-
   end
 
   patch '/patients' do 
@@ -105,4 +35,59 @@ class ApplicationController < Sinatra::Base
     patient.to_json
   end
 
+  get '/clinicians' do  
+    clinicians = Clinician.all
+    clinicians.to_json
+  end
+
+  post '/clinicians' do 
+    clinician = Clinician.create(
+        name: params[:name],
+        title: params[:title],
+      )
+    clinician.to_json
+  end
+
+  get '/clinics' do 
+    clinics = Clinic.all
+    clinics.to_json
+  end
+
+  get '/clinics/:id' do 
+    clinic = Clinic.find(params[:id])
+    clinic.to_json
+  end
+
+  post '/clinics' do
+    clinic = Clinic.create(
+      name: params[:name],
+      location: params[:location]
+    )
+    clinic.to_json
+  end
+
+  post '/patientstats' do 
+    patient = Patient.find_by(first_name: params[:firstName], last_name: params[:lastName])
+    
+    if params[:bloodPressure].present? 
+      blood_pressure = BloodPressure.create(
+        blood_pressure: params[:bloodPressure],
+        patient_id: patient.id
+      )
+    end
+
+    if params[:bloodSugar].present?
+      blood_sugar = BloodSugar.create(
+        blood_sugar: params[:bloodSugar],
+        patient_id: patient.id
+      )
+    end
+
+    vitals = {
+      blood_pressures: patient.blood_pressures,
+      blood_sugars: patient.blood_sugars
+    }
+
+    vitals.to_json
+  end
 end
