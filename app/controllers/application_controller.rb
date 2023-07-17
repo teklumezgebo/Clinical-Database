@@ -4,8 +4,13 @@ class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
   get '/patients' do
-    patients = Patient.all
-    patients.to_json
+    patients = Patient.all.includes(:blood_pressures, :blood_sugars)
+    patients.to_json(
+      include: {
+        blood_pressures: { only: [:id, :blood_pressure] },
+        blood_sugars: { only: [:id, :blood_sugar] }
+      }
+    )
   end
 
   post '/patients' do 
@@ -53,11 +58,6 @@ class ApplicationController < Sinatra::Base
     clinics.to_json
   end
 
-  get '/clinics/:id' do 
-    clinic = Clinic.find(params[:id])
-    clinic.to_json
-  end
-
   post '/clinics' do
     clinic = Clinic.create(
       name: params[:name],
@@ -83,11 +83,5 @@ class ApplicationController < Sinatra::Base
       )
     end
 
-    vitals = {
-      blood_pressures: patient.blood_pressures,
-      blood_sugars: patient.blood_sugars
-    }
-
-    vitals.to_json
   end
 end
