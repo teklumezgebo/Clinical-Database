@@ -68,20 +68,23 @@ class ApplicationController < Sinatra::Base
 
   post '/patientstats' do 
     patient = Patient.find_by(first_name: params[:firstName], last_name: params[:lastName])
+    patient_id = patient.id
     
     if params[:bloodPressure].present? 
       blood_pressure = BloodPressure.create(
         blood_pressure: params[:bloodPressure],
-        patient_id: patient.id
+        patient_id: patient_id
       )
     end
 
     if params[:bloodSugar].present?
       blood_sugar = BloodSugar.create(
         blood_sugar: params[:bloodSugar],
-        patient_id: patient.id
+        patient_id: patient_id
       )
     end
+
+    patient.to_json
 
   end
 end
