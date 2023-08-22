@@ -1,22 +1,41 @@
-# Patient/Clinician/Clinic Database 
-## Frontend Repo -> https://github.com/teklumezgebo/Patient-Database-Frontend
+# Clinical Database 
 
-This is a database that holds information about patients, clinicians, and clinics.
+### [Frontend Repository](https://github.com/teklumezgebo/Patient-Database-Frontend)
+
+Welcome to Clinical Database! This comprehensive database serves as a repository for managing information about patients, clinicians, and clinics.
+
+## Overview
+
+The Patient/Clinician/Clinic Database is designed to streamline the management of healthcare-related data. With a focus on patients, clinicians, and clinics, this system provides users with the tools to organize, update, and retrieve essential information efficiently.
+
+## Features
 
 ### Patients
 
-For each patient a user is able to store whether or not a patient has a diagnosis of hypertension or diabetes.
-Blood pressure and blood sugar readings are able to be stored in this database as well. With each reading being assinged to the correct patient. Users are also able to update existing patients in the case that they aren't hypertensive or diabetic. Patients are also able to be deleted from the database as well.
+- Store patient information, including diagnoses of hypertension and diabetes.
+- Manage blood pressure and blood sugar readings associated with each patient.
+- Update patient records to reflect changes in diagnoses or other details.
+- Delete patient records when necessary.
 
 ### Clinicians
 
-Users are able to add clinicians to this database with their proper title. 
+- Add clinicians to the database, specifying their titles and expertise.
 
 ### Clinics
 
-Similar to clinicians clinics are able to be added to this database and show where the clinic is located.
+- Add clinic information, including location details.
 
+## Data Structure
+
+The database is organized around the following relationships:
+
+- Patients and their associated blood pressure and blood sugar readings.
 
 ## Technologies Used
 
-Active record and Sinatra are used to persist data into this database along with assigning correct blood pressures/blood sugars to patients and the amount of clinicians in each clinic. Two one-to-many relationships are established one being patients and blood pressures/blood sugars with full CRUD capibilites and the other being clinics and clinicians. Multiple fetch requests were created in order to serve the frontend with the correct need.
+The Patient/Clinician/Clinic Database leverages the following technologies:
+
+- **Active Record:** This technology facilitates data persistence in the database, ensuring accurate and reliable storage of information.
+- **Sinatra:** The Sinatra framework provides a foundation for building web applications and APIs, enabling seamless communication between the frontend and the database.
+- **One-to-Many Relationships:** Through well-defined relationships, the database efficiently manages associations between patients and their readings, as well as between clinics and clinicians.
+- **Fetch Requests:** Multiple fetch requests have been implemented to ensure that the frontend receives the necessary data for display and interaction.
